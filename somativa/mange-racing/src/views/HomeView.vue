@@ -40,7 +40,7 @@ const router = useRouter();
   </div>
   <div>
     <section class="flex flex-column align-items-center">
-      <button class="mt-4 app-dark-button" @click="router.push('/moto')" id="order">Quero a minha!</button>
+      <button class="mt-4 app-dark-button" @click="router.push('/login')" id="order">Quero a minha!</button>
     </section>
   </div>
 

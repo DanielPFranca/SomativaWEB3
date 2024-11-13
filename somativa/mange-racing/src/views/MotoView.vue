@@ -1,0 +1,220 @@
+<script setup lang="ts">
+import { ref } from "vue";
+
+const frente = [
+    { id: 1, src: 'src/assets/images/Frente-1.png' },
+    { id: 2, src: 'src/assets/images/Frente-2.png' },
+    { id: 3, src: 'src/assets/images/Frente-3.png' },
+    { id: 4, src: 'src/assets/images/Frente-4.png' },
+    { id: 5, src: 'src/assets/images/Frente-5.png' },
+    { id: 6, src: 'src/assets/images/Frente-6.png' },
+    { id: 7, src: 'src/assets/images/Frente-7.png' }
+];
+
+const motor = [
+    { id: 1, src: 'src/assets/images/Motor-1.png' },
+    { id: 2, src: 'src/assets/images/Motor-2.png' },
+    { id: 3, src: 'src/assets/images/Motor-3.png' },
+    { id: 4, src: 'src/assets/images/Motor-4.png' },
+    { id: 5, src: 'src/assets/images/Motor-5.png' },
+    { id: 6, src: 'src/assets/images/Motor-6.png' },
+    { id: 7, src: 'src/assets/images/Motor-7.png' }
+];
+
+const rodaFrente = [
+    { id: 1, src: 'src/assets/images/RodaFrente-1.png' },
+    { id: 2, src: 'src/assets/images/RodaFrente-2.png' },
+    { id: 3, src: 'src/assets/images/RodaFrente-3.png' },
+    { id: 4, src: 'src/assets/images/RodaFrente-4.png' },
+    { id: 5, src: 'src/assets/images/RodaFrente-5.png' },
+    { id: 6, src: 'src/assets/images/RodaFrente-6.png' },
+    { id: 7, src: 'src/assets/images/RodaFrente-7.png' }
+];
+
+const rodaTras = [
+    { id: 1, src: 'src/assets/images/RodaTraseira-1.png' },
+    { id: 2, src: 'src/assets/images/RodaTraseira-2.png' },
+    { id: 3, src: 'src/assets/images/RodaTraseira-3.jpg' },
+    { id: 4, src: 'src/assets/images/RodaTraseira-4.png' },
+    { id: 5, src: 'src/assets/images/RodaTraseira-5.png' },
+    { id: 6, src: 'src/assets/images/RodaTraseira-6.png' },
+    { id: 7, src: 'src/assets/images/RodaTraseira-7.png' }
+];
+
+const selectedFrenteIndex = ref(0);
+const selectedMotorIndex = ref(0);
+const selectedRodaFrenteIndex = ref(0);
+const selectedRodaTrasIndex = ref(0);
+
+const changePart = (part, isNext) => {
+    const index = part === 'frente' ? selectedFrenteIndex
+                : part === 'motor' ? selectedMotorIndex
+                : part === 'rodaFrente' ? selectedRodaFrenteIndex
+                : selectedRodaTrasIndex;
+                
+    const items = part === 'frente' ? frente
+               : part === 'motor' ? motor
+               : part === 'rodaFrente' ? rodaFrente
+               : rodaTras;
+
+    const newIndex = isNext ? index.value + 1 : index.value - 1;
+    if (newIndex < 0) {
+        index.value = items.length - 1;
+    } else if (newIndex >= items.length) {
+        index.value = 0;
+    } else {
+        index.value = newIndex;
+    }
+};
+</script>
+
+<template>
+    <div v-if="frente.length > 0 && motor.length > 0" class="image-grid">
+        <div class="image-part top">
+            <img class="frente-images"
+                 :src="frente[selectedFrenteIndex].src" 
+                 :alt="`frente ${frente[selectedFrenteIndex].id}`">        
+            <button @click="changePart('frente', false)" class="prev-selector">&#9664;</button>
+            <button @click="changePart('frente', true)" class="next-selector">&#9654;</button>
+        </div>
+        
+        <div class="image-part center">
+            <img class="motor-images"
+                 :src="motor[selectedMotorIndex].src" 
+                 :alt="`motor ${motor[selectedMotorIndex].id}`">        
+            <button @click="changePart('motor', false)" class="prev-selector">&#9664;</button>
+            <button @click="changePart('motor', true)" class="next-selector">&#9654;</button>
+        </div>
+        
+        <div class="image-part rodafrente">
+            <img class="rodafrente-images"
+                 :src="rodaFrente[selectedRodaFrenteIndex].src" 
+                 :alt="`rodaFrente ${rodaFrente[selectedRodaFrenteIndex].id}`">        
+            <button @click="changePart('rodaFrente', false)" class="prev-selector">&#9664;</button>
+            <button @click="changePart('rodaFrente', true)" class="next-selector">&#9654;</button>
+        </div>
+        
+        <div class="image-part rodatras">
+            <img class="rodatras-images"
+                 :src="rodaTras[selectedRodaTrasIndex].src" 
+                 :alt="`rodaTras ${rodaTras[selectedRodaTrasIndex].id}`">        
+            <button @click="changePart('rodaTras', false)" class="prev-selector">&#9664;</button>
+            <button @click="changePart('rodaTras', true)" class="next-selector">&#9654;</button>
+        </div>
+    </div>
+</template>
+
+
+
+
+
+
+
+<!-- <style scoped lang="scss">
+.image-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.image-part {
+    position: relative;
+    border: 2px solid gray;
+    overflow: hidden;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    background: none;
+    color: black;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+button:hover {
+    color: #333;
+}
+
+.prev-selector {
+    left: 10px;
+}
+
+.next-selector {
+    right: 10px;
+}
+</style> -->
+
+
+
+<style scoped lang="scss">
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #333;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.image-part {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  border: 2px solid #ddd;
+}
+
+.image-part img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.prev-selector, .next-selector {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem 0.5rem;
+  font-size: 1.2rem;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.prev-selector {
+  left: -15px;
+}
+
+.next-selector {
+  right: -15px;
+}
+</style>
+
+
+
+
+
