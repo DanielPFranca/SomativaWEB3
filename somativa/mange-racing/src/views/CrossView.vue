@@ -2,43 +2,20 @@
 import { ref } from "vue";
 
 const frente = [
-    { id: 1, src: 'src/assets/images/Frente-1.png' },
-    { id: 2, src: 'src/assets/images/Frente-2.png' },
-    { id: 3, src: 'src/assets/images/Frente-3.png' },
-    { id: 4, src: 'src/assets/images/Frente-4.png' },
-    { id: 5, src: 'src/assets/images/Frente-5.png' },
-    { id: 6, src: 'src/assets/images/Frente-6.png' },
-    { id: 7, src: 'src/assets/images/Frente-7.png' }
+    { id: 1, src: 'src/assets/images/cross/Frente-4.png' }
 ];
 
 const motor = [
-    { id: 1, src: 'src/assets/images/Motor-1.png' },
-    { id: 2, src: 'src/assets/images/Motor-2.png' },
-    { id: 3, src: 'src/assets/images/Motor-3.png' },
-    { id: 4, src: 'src/assets/images/Motor-4.png' },
-    { id: 5, src: 'src/assets/images/Motor-5.png' },
-    { id: 6, src: 'src/assets/images/Motor-6.png' },
-    { id: 7, src: 'src/assets/images/Motor-7.png' }
+    { id: 1, src: 'src/assets/images/cross/Motor-4.png' }
 ];
 
 const rodaFrente = [
-    { id: 1, src: 'src/assets/images/RodaFrente-1.png' },
-    { id: 2, src: 'src/assets/images/RodaFrente-2.png' },
-    { id: 3, src: 'src/assets/images/RodaFrente-3.png' },
-    { id: 4, src: 'src/assets/images/RodaFrente-4.png' },
-    { id: 5, src: 'src/assets/images/RodaFrente-5.png' },
-    { id: 6, src: 'src/assets/images/RodaFrente-6.png' },
-    { id: 7, src: 'src/assets/images/RodaFrente-7.png' }
+    { id: 1, src: 'src/assets/images/cross/RodaFrente-3.png' },
 ];
 
 const rodaTras = [
-    { id: 1, src: 'src/assets/images/RodaTraseira-1.png' },
-    { id: 2, src: 'src/assets/images/RodaTraseira-2.png' },
-    { id: 3, src: 'src/assets/images/RodaTraseira-3.jpg' },
-    { id: 4, src: 'src/assets/images/RodaTraseira-4.png' },
-    { id: 5, src: 'src/assets/images/RodaTraseira-5.png' },
-    { id: 6, src: 'src/assets/images/RodaTraseira-6.png' },
-    { id: 7, src: 'src/assets/images/RodaTraseira-7.png' }
+    { id: 1, src: 'src/assets/images/cross/RodaTraseira-4.png' },
+    { id: 2, src: 'src/assets/images/cross/RodaTraseira-8.png' },
 ];
 
 const selectedFrenteIndex = ref(0);

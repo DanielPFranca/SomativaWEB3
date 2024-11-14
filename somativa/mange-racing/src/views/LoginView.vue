@@ -19,7 +19,8 @@ const fazerLogin = async () => {
 
         if (users.length > 0) {
             erroLogin.value = '';
-            router.push('/moto');
+            router.push('/');
+            localStorage.setItem('isLoggedIn', 'true');
 
         } else {
             erroLogin.value = 'Usuário ou senha incorretos';

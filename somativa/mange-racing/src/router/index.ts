@@ -4,6 +4,10 @@ import TecView from '@/views/TecView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 import LoginView from '@/views/LoginView.vue'
 import MotoView from '@/views/MotoView.vue'
+import CrossView from '@/views/CrossView.vue'
+import CustomView from '@/views/CustomView.vue'
+import TrevelarView from '@/views/TrevelarView.vue'
+import NimbusView from '@/views/NimbusView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,16 +21,43 @@ const router = createRouter({
       path: '/moto',
       name: 'moto',
       component:MotoView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/tec',
       name: 'tec',
       component: TecView,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/cross',
+      name: 'cross',
+      component:CrossView,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/custom',
+      name: 'custom',
+      component:CustomView,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/trevelar',
+      name: 'trevelar',
+      component:TrevelarView,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/nimbus',
+      name: 'nimbus',
+      component:NimbusView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/login',
       name: 'login',
       component: LoginView
+
     },
     {
       path: '/:pathMatch(.*)*',
@@ -36,5 +67,16 @@ const router = createRouter({
     
   ],
 })
+
+router.beforeEach((to, from, next) => {
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  const { requiresAuth } = to.meta;
+
+  if (requiresAuth && !isLoggedIn) {
+    return next({ name: 'login' });
+  }
+
+  next();
+});
 
 export default router
