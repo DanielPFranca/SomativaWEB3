@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import TecView from '@/views/TecView.vue'
+import TecView from '@/views/CartView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 import LoginView from '@/views/LoginView.vue'
 import MotoView from '@/views/MotoView.vue'
@@ -8,6 +8,7 @@ import CrossView from '@/views/CrossView.vue'
 import CustomView from '@/views/CustomView.vue'
 import TrevelarView from '@/views/TrevelarView.vue'
 import NimbusView from '@/views/NimbusView.vue'
+import CartView from '@/views/CartView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,9 +25,9 @@ const router = createRouter({
       meta: { requiresAuth: true }
     },
     {
-      path: '/tec',
-      name: 'tec',
-      component: TecView,
+      path: '/cart',
+      name: 'cart',
+      component: CartView,
       meta: { requiresAuth: true }
     },
     {

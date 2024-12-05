@@ -11,7 +11,7 @@
         <nav class="ml-5">
             <RouterLink class="m-3" to="/">Home</RouterLink>
             <RouterLink class="m-3" to="/moto">Motorização</RouterLink>
-            <RouterLink class="m-3" to="/tec">Tec</RouterLink>
+            <RouterLink class="m-3" to="/cart">Cart</RouterLink>
           </nav>
     </header>
 </div>
@@ -31,7 +31,7 @@ header{
     width: 40rem;
     max-width: 100%;
     p{  
-        font-size: 40px;
+        font-size: 30px;
         font-weight: bold;
         font-style: italic;
         text-decoration-color: white;

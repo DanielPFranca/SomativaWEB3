@@ -1,79 +1,120 @@
-<script setup lang="ts">
+<script>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
-const frente = [
-    { id: 1, src: 'src/assets/images/cross/Frente-4.png' }
-];
+export default {
+  setup() {
+    const router = useRouter();
 
-const motor = [
-    { id: 1, src: 'src/assets/images/cross/Motor-4.png' }
-];
+    // Dados das peças
+    const frente = [{ id: 1, src: "src/assets/images/cross/Frente-4.png", nome: "Frente n1" }];
+    const motor = [{ id: 1, src: "src/assets/images/cross/Motor-4.png", nome: "Motor n1" }];
+    const rodaFrente = [{ id: 1, src: "src/assets/images/cross/RodaFrente-3.png", nome: "Roda Frente n1" }];
+    const rodaTras = [
+      { id: 1, src: "src/assets/images/cross/RodaTraseira-4.png", nome: "Roda de Tras n1" },
+      { id: 2, src: "src/assets/images/cross/RodaTraseira-8.png", nome: "Roda de Tras n2" },
+    ];
 
-const rodaFrente = [
-    { id: 1, src: 'src/assets/images/cross/RodaFrente-3.png' },
-];
+    // Índices das peças selecionadas
+    const selectedFrenteIndex = ref(0);
+    const selectedMotorIndex = ref(0);
+    const selectedRodaFrenteIndex = ref(0);
+    const selectedRodaTrasIndex = ref(0);
 
-const rodaTras = [
-    { id: 1, src: 'src/assets/images/cross/RodaTraseira-4.png' },
-    { id: 2, src: 'src/assets/images/cross/RodaTraseira-8.png' },
-];
-
-const selectedFrenteIndex = ref(0);
-const selectedMotorIndex = ref(0);
-const selectedRodaFrenteIndex = ref(0);
-const selectedRodaTrasIndex = ref(0);
-
-const changePart = (part, isNext) => {
-    const partData = {
+    // Função para mudar as peças
+    const changePart = (part, isNext) => {
+      const partData = {
         frente: { index: selectedFrenteIndex, items: frente },
         motor: { index: selectedMotorIndex, items: motor },
         rodaFrente: { index: selectedRodaFrenteIndex, items: rodaFrente },
         rodaTras: { index: selectedRodaTrasIndex, items: rodaTras },
+      };
+      const { index, items } = partData[part];
+      const newIndex = isNext ? index.value + 1 : index.value - 1;
+      index.value = (newIndex + items.length) % items.length;
     };
-    const { index, items } = partData[part];
-    const newIndex = isNext ? index.value + 1 : index.value - 1;
-    index.value = (newIndex + items.length) % items.length;
-};
 
+    // Adicionar a customização ao carrinho
+    const addToCart = () => {
+      const newCustomization = {
+        frente: frente[selectedFrenteIndex.value],
+        motor: motor[selectedMotorIndex.value],
+        rodaFrente: rodaFrente[selectedRodaFrenteIndex.value],
+        rodaTras: rodaTras[selectedRodaTrasIndex.value],
+      };
+
+      // Recuperar carrinho existente ou criar um novo
+      const currentCart = JSON.parse(localStorage.getItem("cartItems")) || [];
+      currentCart.push(newCustomization);
+
+      // Salvar o carrinho atualizado no localStorage
+      localStorage.setItem("cartItems", JSON.stringify(currentCart));
+
+      // Navegar para a tela de carrinho
+      router.push("/cart");
+    };
+
+    return {
+      frente,
+      motor,
+      rodaFrente,
+      rodaTras,
+      selectedFrenteIndex,
+      selectedMotorIndex,
+      selectedRodaFrenteIndex,
+      selectedRodaTrasIndex,
+      changePart,
+      addToCart,
+    };
+  },
+};
 </script>
 
+
 <template>
-    <div v-if="frente.length > 0 && motor.length > 0" class="image-grid">
-        <div class="image-part top">
-            <img class="frente-images"
-                 :src="frente[selectedFrenteIndex].src" 
-                 :alt="`frente ${frente[selectedFrenteIndex].id}`">        
-            <button @click="changePart('frente', false)" class="prev-selector">&#9664;</button>
-            <button @click="changePart('frente', true)" class="next-selector">&#9654;</button>
-        </div>
-        
-        <div class="image-part center">
-            <img class="motor-images"
-                 :src="motor[selectedMotorIndex].src" 
-                 :alt="`motor ${motor[selectedMotorIndex].id}`">        
-            <button @click="changePart('motor', false)" class="prev-selector">&#9664;</button>
-            <button @click="changePart('motor', true)" class="next-selector">&#9654;</button>
-        </div>
-        
-        <div class="image-part rodafrente">
-            <img class="rodafrente-images"
-                 :src="rodaFrente[selectedRodaFrenteIndex].src" 
-                 :alt="`rodaFrente ${rodaFrente[selectedRodaFrenteIndex].id}`">        
-            <button @click="changePart('rodaFrente', false)" class="prev-selector">&#9664;</button>
-            <button @click="changePart('rodaFrente', true)" class="next-selector">&#9654;</button>
-        </div>
-        
-        <div class="image-part rodatras">
-            <img class="rodatras-images"
-                 :src="rodaTras[selectedRodaTrasIndex].src" 
-                 :alt="`rodaTras ${rodaTras[selectedRodaTrasIndex].id}`">        
-            <button @click="changePart('rodaTras', false)" class="prev-selector">&#9664;</button>
-            <button @click="changePart('rodaTras', true)" class="next-selector">&#9654;</button>
-        </div>
+  <div class="customization-container">
+    <h1>Personalize sua Moto</h1>
+    <div class="image-grid">
+      <div class="image-part">
+        <img 
+          class="frente-images" 
+          :src="frente[selectedFrenteIndex].src" 
+          :alt="`Frente ${frente[selectedFrenteIndex].id}`"
+        />
+        <button @click="changePart('frente', false)" class="prev-selector">&#9664;</button>
+        <button @click="changePart('frente', true)" class="next-selector">&#9654;</button>
+      </div>
+      <div class="image-part">
+        <img 
+          class="motor-images" 
+          :src="motor[selectedMotorIndex].src" 
+          :alt="`Motor ${motor[selectedMotorIndex].id}`"
+        />
+        <button @click="changePart('motor', false)" class="prev-selector">&#9664;</button>
+        <button @click="changePart('motor', true)" class="next-selector">&#9654;</button>
+      </div>
+      <div class="image-part">
+        <img 
+          class="rodafrente-images" 
+          :src="rodaFrente[selectedRodaFrenteIndex].src" 
+          :alt="`Roda Frente ${rodaFrente[selectedRodaFrenteIndex].id}`"
+        />
+        <button @click="changePart('rodaFrente', false)" class="prev-selector">&#9664;</button>
+        <button @click="changePart('rodaFrente', true)" class="next-selector">&#9654;</button>
+      </div>
+      <div class="image-part">
+        <img 
+          class="rodatras-images" 
+          :src="rodaTras[selectedRodaTrasIndex].src" 
+          :alt="`Roda Traseira ${rodaTras[selectedRodaTrasIndex].id}`"
+        />
+        <button @click="changePart('rodaTras', false)" class="prev-selector">&#9664;</button>
+        <button @click="changePart('rodaTras', true)" class="next-selector">&#9654;</button>
+      </div>
     </div>
+    <button @click="addToCart" class="cart-button">Ir para o Carrinho</button>
+  </div>
 </template>
-
-
 
 
 <style scoped lang="scss">
@@ -128,7 +169,6 @@ const changePart = (part, isNext) => {
   right: -15px;
 }
 </style>
-
 
 
 
